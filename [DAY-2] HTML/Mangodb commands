@@ -1,0 +1,226 @@
+1. use
+2. createCollection()
+3. insertOne()
+4. insertMany()
+5. find()
+6. findOne()
+7. $gt
+8. $lt
+9. $set
+10. updateOne()
+11. updateMany()
+12. deleteOne()
+13. deleteMany()
+14. sort()
+15. countDocuments()
+
+EXAMPLE:
+
+test> use firstdb
+switched to db firstdb
+firstdb> db.createCollection('bankdata')
+{ ok: 1 }
+firstdb> db.bankdata.insertOne({name:"Roopanadh",age:20,loan:15000,amount:3000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a2f879141d228831babc114')
+}
+firstdb> db.bankdata.insertMany([{name:"Varun",age:21,loan:20000,amount:4000},{name:"Muneer",age:22,loan:10000,amount:5000}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a2f880d41d228831babc115'),
+    '1': ObjectId('6a2f880d41d228831babc116')
+  }
+}
+firstdb> db.bankdata.find()
+[
+  {
+    _id: ObjectId('6a2f879141d228831babc114'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  },
+  {
+    _id: ObjectId('6a2f880d41d228831babc115'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  },
+  {
+    _id: ObjectId('6a2f880d41d228831babc116'),
+    name: 'Muneer',
+    age: 22,
+    loan: 10000,
+    amount: 5000
+  }
+]
+firstdb> db.bankdata.updateMany({},{$set:{idproof:"Aadhar Card"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+firstdb> db.bankdata.find({loan:{$gt:10000}})
+[
+  {
+    _id: ObjectId('6a2f879141d228831babc114'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000,
+    idproof: 'Aadhar Card'
+  },
+  {
+    _id: ObjectId('6a2f880d41d228831babc115'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000,
+    idproof: 'Aadhar Card'
+  }
+]
+firstdb> db.bankdata.deleteMany({idproof:"Aadhar Card"})
+{ acknowledged: true, deletedCount: 3 }
+
+firstdb> db.bankdata.find()
+
+firstdb> db.bankdata.insertMany([{name:"Varun",age:21,loan:20000,amount:4000},{name:"Muneer",age:22,loan:10000,amount:5000}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a2f8adc41d228831babc117'),
+    '1': ObjectId('6a2f8adc41d228831babc118')
+  }
+}
+firstdb> db.bankdata.insertOne({name:"Roopanadh",age:20,loan:15000,amount:3000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a2f8ae441d228831babc119')
+}
+firstdb> db.bankdata.find()
+[
+  {
+    _id: ObjectId('6a2f8adc41d228831babc117'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  },
+  {
+    _id: ObjectId('6a2f8adc41d228831babc118'),
+    name: 'Muneer',
+    age: 22,
+    loan: 10000,
+    amount: 5000
+  },
+  {
+    _id: ObjectId('6a2f8ae441d228831babc119'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  }
+]
+firstdb> db.bankdata.find({loan:{$gt:10000}})
+[
+  {
+    _id: ObjectId('6a2f8adc41d228831babc117'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  },
+  {
+    _id: ObjectId('6a2f8ae441d228831babc119'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  }
+]
+firstdb> db.bankdata.find({loan:{$gte:10000}})
+[
+  {
+    _id: ObjectId('6a2f8adc41d228831babc117'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  },
+  {
+    _id: ObjectId('6a2f8adc41d228831babc118'),
+    name: 'Muneer',
+    age: 22,
+    loan: 10000,
+    amount: 5000
+  },
+  {
+    _id: ObjectId('6a2f8ae441d228831babc119'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  }
+]
+firstdb> db.bankdata.findOne()
+{
+  _id: ObjectId('6a2f8adc41d228831babc117'),
+  name: 'Varun',
+  age: 21,
+  loan: 20000,
+  amount: 4000
+}
+firstdb> db.bankdata.find().sort({ loan: 1 })
+[
+  {
+    _id: ObjectId('6a2f8adc41d228831babc118'),
+    name: 'Muneer',
+    age: 22,
+    loan: 10000,
+    amount: 5000
+  },
+  {
+    _id: ObjectId('6a2f8ae441d228831babc119'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  },
+  {
+    _id: ObjectId('6a2f8adc41d228831babc117'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  }
+]
+firstdb> db.bankdata.countDocuments({})
+3
+firstdb> db.bankdata.find()
+[
+  {
+    _id: ObjectId('6a2f8adc41d228831babc117'),
+    name: 'Varun',
+    age: 21,
+    loan: 20000,
+    amount: 4000
+  },
+  {
+    _id: ObjectId('6a2f8adc41d228831babc118'),
+    name: 'Muneer',
+    age: 22,
+    loan: 10000,
+    amount: 5000
+  },
+  {
+    _id: ObjectId('6a2f8ae441d228831babc119'),
+    name: 'Roopanadh',
+    age: 20,
+    loan: 15000,
+    amount: 3000
+  }
